@@ -29,7 +29,7 @@ public class PersonController{
     @GetMapping("/{id}")
     private ResponseEntity<?> getPersonById(@PathVariable Long id){
         response.clear();
-        response.put("person",getPersonById(id));
+        response.put("person",personService.getPersonById(id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
