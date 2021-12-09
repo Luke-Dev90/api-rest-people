@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -17,6 +18,14 @@ import java.util.stream.Collectors;
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private Map<String,Object> response = new HashMap<>();
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<?> notFoundException(NotFoundException nfe){
+        response.clear();
+        response.put("error",nfe.getMessage());
+        response.put("time",LocalDateTime.now());
+        return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
