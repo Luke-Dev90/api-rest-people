@@ -1,5 +1,6 @@
 package com.lchalela.people.controller;
 
+import com.lchalela.people.dto.PersonDto;
 import com.lchalela.people.model.Person;
 import com.lchalela.people.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +36,17 @@ public class PersonController{
     }
 
     @PostMapping("/new")
-    private ResponseEntity<?> savePerson(@Valid @RequestBody Person person){
+    private ResponseEntity<?> savePerson(@Valid @RequestBody PersonDto personDto){
         response.clear();
-        personService.savePerson(person);
+        personService.savePerson(personDto);
         response.put("message","save person successfully");
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> updatePerson(@PathVariable Long id, @RequestBody Person person){
+    private ResponseEntity<?> updatePerson(@PathVariable Long id, @RequestBody PersonDto personDto){
         response.clear();
-        personService.updatePerson(id,person);
+        personService.updatePerson(id,personDto);
         response.put("message","Person updated successfully");
         return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
     }
